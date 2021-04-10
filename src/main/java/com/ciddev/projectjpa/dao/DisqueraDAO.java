@@ -22,5 +22,19 @@ public interface DisqueraDAO {
 	List<Disquera>consultar();
 	
 	Disquera consultarById(Long id);
+	
+	/**
+	 * Metodo que permite consultar la disquera a partir de su descripcion.
+	 * @param nombre {@link String} descripcion de la disquera.
+	 * @return {@link Disquera} disquera consultada.
+	 */
+	Disquera consultarByDescripcionJPQL(String descripcion);
+	
+	/**
+	 * Metodo que permite consultar con SQL nativo la disquera a partir de una descripcion
+	 * @param descripcion{@link String} descripcion de la disquera.
+	 * @return {@link Disquera} disquera consultada.
+	 */
+	Disquera consultarByDescripcionNative(String descripcion);
 
 }

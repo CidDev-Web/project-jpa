@@ -1,5 +1,6 @@
 package com.ciddev.projectjpa.dao.impl;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import com.ciddev.projectjpa.dao.DisqueraDAO;
 import com.ciddev.projectjpa.entity.Disquera;
 
 public class DisqueraDAOImplTest {
-	
+
 	private DisqueraDAO disqueraDAO = new DisqueraDAOImpl();
 
 	@Test
@@ -20,33 +21,33 @@ public class DisqueraDAOImplTest {
 		disquera.setDescripcion("Quijotero");
 		disquera.setFechaCreacion(LocalDateTime.now());
 		disquera.setStatus(true);
-		
+
 		this.disqueraDAO.guardar(disquera);
 	}
 
 	@Test
 	public void testActualizar() {
 		Disquera disqueraConsultada = this.disqueraDAO.consultarById(9L);
-		
+
 		disqueraConsultada.setDescripcion("Disquera IronMaiden");
-		
+
 		this.disqueraDAO.actualizar(disqueraConsultada);
 	}
 
 	@Test
 	public void testEliminar() {
-		
+
 		Long id = 9L;
-		
+
 		this.disqueraDAO.eliminar(id);
 	}
 
 	@Test
 	public void testConsultar() {
 		List<Disquera> disquerasConsultadas = this.disqueraDAO.consultar();
-		
+
 		assertTrue(disquerasConsultadas.size() > 0);
-		
+
 		disquerasConsultadas.forEach(disquera -> {
 			System.out.println("Disquera: " + disquera.getDescripcion());
 		});
@@ -54,8 +55,32 @@ public class DisqueraDAOImplTest {
 
 	@Test
 	public void testConsultarById() {
+
 		Disquera disquera = this.disqueraDAO.consultarById(9L);
+
+		assertNotNull(disquera);
+
 		System.out.println(disquera.getDescripcion());
+
 	}
 
+	@Test
+	public void testConsultarByDescripcionJPQL() {
+
+		Disquera disqueraConsultada = this.disqueraDAO.consultarByDescripcionJPQL("Quijotero");
+
+		assertNotNull(disqueraConsultada);
+
+		System.out.println("Disquera por descripcion: " + disqueraConsultada.getDescripcion());
+
+	}
+
+	@Test
+	public void consultarByDescripcionNative() {
+		Disquera disqueraConsultada = this.disqueraDAO.consultarByDescripcionJPQL("Quijotero");
+
+		assertNotNull(disqueraConsultada);
+
+		System.out.println("Disquera por descripcion: " + disqueraConsultada.getDescripcion());
+	}
 }
