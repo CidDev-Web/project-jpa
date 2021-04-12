@@ -36,7 +36,7 @@ public class SubGenero {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idGenero")
-	@Cascade(CascadeType.PERSIST)
+	@Cascade(CascadeType.REMOVE)
 	private Genero genero;
 	
 	@Column(name = "fechaCreacion")

@@ -26,34 +26,68 @@ public class SubGeneroDAOImpl implements SubGeneroDAO {
 	@Override
 	public void guardar(SubGenero subGenero) {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-		
+
 		EntityTransaction et = em.getTransaction();
-		
+
 		try {
 
 			et.begin();
 			em.persist(subGenero);
 			et.commit();
-		}catch(Exception e) {
-			if(et != null) {
+		} catch (Exception e) {
+			if (et != null) {
 				et.rollback();
 			}
 			e.printStackTrace();
-		}finally {
+		} finally {
 			em.close();
 		}
-		
+
 	}
 
 	@Override
 	public void actualizar(SubGenero subGenero) {
-		// TODO Auto-generated method stub
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+
+		EntityTransaction et = em.getTransaction();
+
+		try {
+
+			et.begin();
+			em.merge(subGenero);
+			et.commit();
+		} catch (Exception e) {
+			if (et != null) {
+				et.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			em.close();
+		}
 
 	}
 
 	@Override
 	public void eliminar(Long id) {
-		// TODO Auto-generated method stub
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		
+		SubGenero subgeneroConsultado = em.find(SubGenero.class, id);
+
+		EntityTransaction et = em.getTransaction();
+
+		try {
+
+			et.begin();
+			em.remove(subgeneroConsultado);
+			et.commit();
+		} catch (Exception e) {
+			if (et != null) {
+				et.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			em.close();
+		}
 
 	}
 
@@ -69,7 +103,9 @@ public class SubGeneroDAOImpl implements SubGeneroDAO {
 
 	@Override
 	public SubGenero consultarById(Long id) {
-		return null;
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		
+		return em.find(SubGenero.class, id);
 	}
 
 }
